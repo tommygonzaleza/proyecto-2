@@ -1,1 +1,1 @@
-[{"serial": 12341234, "titulo": "efwef", "precio_de_venta": 12, "stock_actual": 12}, {"serial": 12341234, "titulo": "sdfsdv", "precio_de_venta": 123, "stock_actual": 1}]
+[{"serial": 12345678, "titulo": "tomas", "precio_de_venta": 100, "stock_actual": 1}, {"serial": 11111111, "titulo": "Alejandro", "precio_de_venta": 26, "stock_actual": 34}, {"serial": 1, "titulo": "tomas", "precio_de_venta": 12, "stock_actual": 3}]
