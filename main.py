@@ -177,10 +177,10 @@ def busqueda_binaria_palabras(arr, menor, mayor, palabras):
             return mid
  
         elif arr[mid] > palabras:
-            return busqueda_binaria_serial(arr, menor, mid - 1, palabras)
+            return busqueda_binaria_palabras(arr, menor, mid - 1, palabras)
 
         else:
-            return busqueda_binaria_serial(arr, mid + 1, mayor, palabras)
+            return busqueda_binaria_palabras(arr, mid + 1, mayor, palabras)
     else:
         return -1
 
@@ -216,7 +216,6 @@ def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
 lista_de_historietas = descargar_lista_de_historietas()
 if(len(lista_de_historietas) > 0):
     for i in range(len(lista_de_historietas)):
-        print({"posicion": i, "serial": lista_de_historietas[i]["serial"]})
         lista_de_seriales.append({"posicion": i, "serial": lista_de_historietas[i]["serial"]})
         lista_titulo = lista_de_historietas[i]["titulo"].split(" ")
         for k in range(len(lista_titulo)):
@@ -231,6 +230,4 @@ inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
 
 lista_de_historietas = descargar_lista_de_historietas()
 
-print("Lista de Historietas:", lista_de_historietas)
-print("Lista de Seriales:", lista_de_seriales)
-print("Lista de Palabras:", lista_de_palabras)
+print(busqueda_binaria_serial(lista_de_seriales, 0, len(lista_de_seriales)-1, "11111115", lista_de_historietas))
