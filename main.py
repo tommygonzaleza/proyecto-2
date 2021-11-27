@@ -6,8 +6,6 @@ lista_de_seriales = []
 lista_de_palabras = []
 
 # Descarga la lista que esta en el archivo data.txt
-
-
 def descargar_lista_de_historietas():
     if(os.path.exists("data.txt") and os.stat("data.txt").st_size != 0):
         with open('data.txt') as json_file:
@@ -16,15 +14,11 @@ def descargar_lista_de_historietas():
     return []
 
 # Carga la lista nueva en el archivo data.txt
-
-
 def actualizar_lista_de_historieta(lista_nueva):
     with open('data.txt', 'w') as outfile:
         json.dump(lista_nueva, outfile)
 
 # Crea historietas
-
-
 def crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     print("Para crear una historieta se requiere que ingresé los valores del serial, título, precio de venta y stock actual.")
     # Chequeando el serial.
@@ -148,8 +142,6 @@ def crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     quick_sort(lista_de_palabras, 0, len(lista_de_palabras) - 1, "palabra")
 
 # Divide la lista en partes para poder realizar el ordenamiento con "Quick Sort".
-
-
 def particion(arr, menor, mayor, elemento):
     i = (menor - 1)
     pivot = arr[mayor][elemento]
@@ -164,8 +156,6 @@ def particion(arr, menor, mayor, elemento):
     return (i + 1)
 
 # Funcion de ordenamiento con el método "Quick Sort"
-
-
 def quick_sort(arr, menor, mayor, elemento):
     if menor < mayor:
 
@@ -177,9 +167,8 @@ def quick_sort(arr, menor, mayor, elemento):
         # partition and after partition
         quick_sort(arr, menor, pi-1, elemento)
         quick_sort(arr, pi+1, mayor, elemento)
+
 # Función de búsqueda binaria para los Seriales
-
-
 def bubleSort(num, metodo_ordenamiento):
     intercambio = True
     while intercambio:
@@ -189,9 +178,8 @@ def bubleSort(num, metodo_ordenamiento):
                 num[i][metodo_ordenamiento], num[i + 1][metodo_ordenamiento] = num[i +
                                                                                    1][metodo_ordenamiento], num[i][metodo_ordenamiento]
                 intercambio = True
+
 # Función de búsqueda binaria para los Seriales
-
-
 def busqueda_binaria_serial(arr, menor, mayor, serial, lista_de_historietas):
     if mayor >= menor:
         # El doble slash "//" divide y rendondea hacia abajo
@@ -208,9 +196,6 @@ def busqueda_binaria_serial(arr, menor, mayor, serial, lista_de_historietas):
         return -1
 
 # Función de búsqueda binaria para palabras del titulo (No lista)
-# Función de búsqueda binaria para palabras del titulo (No lista)
-
-
 def busqueda_binaria_palabras(arr, menor, mayor, palabra):
     array_palabra = []
 
@@ -240,9 +225,8 @@ def busqueda_binaria_palabras(arr, menor, mayor, palabra):
             return busqueda_binaria_palabras(arr, mid + 1, mayor, palabra)
     else:
         return -1
+
 # Busqueda binaria de palabras interceptando dos listas
-
-
 def Intercepcion_listas():
     palabras = input("""
     Introduzca el nombre del Comic que quiere buscar.
@@ -279,7 +263,7 @@ def Intercepcion_listas():
     #Imprime todas las historietas cuando busca por una palabra 
         if len(palabras)==1 and len(muestra_posiciones_1)>0:
             print("""
-Las Opciones disponibles son:
+        Las Opciones disponibles son:
              """)
             for i in range(len(muestra_posiciones_1)):      
                 print(i+1,"-",lista_de_historietas[muestra_posiciones_1[i]]["titulo"])
@@ -316,7 +300,7 @@ Las Opciones disponibles son:
         #Convierte el objeto en lista nuevamente
             list3= list(set3)
             print("""
-Las opciones disponibles son: 
+            Las opciones disponibles son: 
                 """)
             for i in range(len(list3)):
                 print(i+1,"-",lista_de_historietas[list3[i]]["titulo"])
@@ -349,7 +333,6 @@ Las opciones disponibles son:
         else:
             print("Gracias por ingresar al sistema. Hasta luego")
             return
-
 
 # Funcion que muestra las opciones de la aplicación.
 def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
@@ -386,7 +369,6 @@ def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
             f"La opción ({opcion}) que ingresó no es un número. Debe ingresar el número de la opción que desea escoger.")
         inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
 
-
 # Carga la lista del archivo data.txt
 lista_de_historietas = descargar_lista_de_historietas()
 if(len(lista_de_historietas) > 0):
@@ -409,9 +391,3 @@ print("Bienvenido a nuestra tienda de historietas ARG.")
 inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
 
 lista_de_historietas = descargar_lista_de_historietas()
-
-# print(busqueda_binaria_serial(lista_de_seriales, 0, len(lista_de_seriales)-1, "11111115", lista_de_historietas))
-# print(lista_de_palabras)
-# print(Intercepcion_listas("ti"))
-# print(busqueda_binaria_palabras(lista_de_palabras,0,len(lista_de_palabras),"tomas"))
-
