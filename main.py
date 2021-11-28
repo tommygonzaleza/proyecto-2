@@ -20,6 +20,7 @@ def actualizar_lista_de_historieta(lista_nueva):
 
 # Crea historietas
 def crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras):
+        
     print("Para crear una historieta se requiere que ingresé los valores del serial, título, precio de venta y stock actual.")
     # Chequeando el serial.
     serial = input("""
@@ -334,6 +335,75 @@ def Intercepcion_listas():
             print("Gracias por ingresar al sistema. Hasta luego")
             return
 
+#Funcion que compra que tiene como parametro la lista encontrada en la funcion Intercepcion_listas
+def compra(lista_de_historietas):
+    
+    #Contiene informacion de la historieta que se quiere comprar
+    a_comprar_original = str(Intercepcion_listas())
+    a_comprar = str(a_comprar_original).replace("{","").replace("}","").split(",")
+        
+    #Contiene el serial de la historieta como un str
+    serial = (a_comprar[0]).replace("'serial': ","").replace(" ", "").replace("'","")
+    
+    #Contiene el Titulo de la historieta como un str
+    titulo = (a_comprar[1]).replace(" 'titulo': ","").replace("'","")
+        
+    #Contiene el precio de venta como un str
+    precio_de_venta = (a_comprar[2]).replace("'precio_de_venta': ","").replace(" ", "").replace("'","")
+    
+    #Contiene el stock_disponible como un str, stock_disponible_entero como un int
+    stock_disponible = (a_comprar[3]).replace("'stock_actual': ","").replace(" ","")
+    stock_disponible_entero = int(stock_disponible)
+        
+    print("Disponible: " + stock_disponible + " Stocks " + "En la historieta con el titulo de: " + titulo)          
+    if stock_disponible_entero > 0:
+        while True:    
+            try:
+                stock_solicitados = int(input("""
+                                            
+                Por favor, ingrese el numero de Stocks que desea comprar: 
+                > """))
+                if stock_solicitados > 0:
+                    if stock_solicitados <= stock_disponible_entero:                       
+                        break
+                    elif stock_solicitados >= stock_disponible_entero:
+                        print("No puedes comprar mas stocks de los que hay disponibles")
+                elif stock_solicitados == 0:
+                    print("No se efectuara compra de stocks")
+                    return
+            except:
+                print("""
+                    
+                    Dato invalido, solo se aceptan enteros                  
+                    
+                    """)  
+        
+        
+        sin_cambiar = {
+            "serial": serial,
+            "titulo": titulo,
+            "precio_de_venta": int(precio_de_venta),
+            "stock_actual": stock_disponible_entero            
+        }
+        
+        cambio_hecho = {
+            "serial": serial,
+            "titulo": titulo,
+            "precio_de_venta": int(precio_de_venta),
+            "stock_actual": stock_disponible_entero - stock_solicitados           
+        }
+        
+        for i in range(len(lista_de_historietas)):
+            if str(sin_cambiar) == str(lista_de_historietas[i]):
+                lista_de_historietas[i] = cambio_hecho
+                actualizar_lista_de_historieta(lista_de_historietas)      
+                print("Compra exitosa") 
+                print(cambio_hecho)
+        
+        return    
+    
+    return
+
 # Funcion que muestra las opciones de la aplicación.
 def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     # Mensaje de bienvenida con las posibles opciones.
@@ -345,6 +415,8 @@ def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     3. Salir.
     """)
 
+    compra(lista_de_historietas)
+    
     # Input para que el usuario ingrese la opción escogida.
     opcion = input("""
     Ingrese el número de la opción que desea escoger:
