@@ -334,6 +334,40 @@ def Intercepcion_listas():
             print("Gracias por ingresar al sistema. Hasta luego")
             return
 
+#Funcion que compra que tiene como parametro la lista encontrada en la funcion Intercepcion_listas
+def compra():
+    
+    #Contiene informacion de la historieta que se quiere comprar
+    a_comprar = str(Intercepcion_listas()).replace("{","").replace("}","").split(",")
+    
+    #Contiene el stock_disponible como un str
+    stock_disponible = (a_comprar[3]).replace("'stock_actual': ","").replace(" ","")
+    # stock_disponible = int(stock_disponible)
+    
+    #Contiene el Titulo de la historieta
+    titulo = (a_comprar[1]).replace("'titulo': ","").replace(" ", "").replace("'","")
+    
+    
+    print("Disponible: " + stock_disponible + " Stocks " + "En la historieta con el titulo de: " + titulo)          
+
+    while True:    
+        try:
+            stock_solicitados = int(input("""
+                                          
+                                          Por favor, ingrese el numero de Stocks que desea comprar: 
+                                      > """))
+            break
+        except:
+            print("""
+                  
+                  Dato invalido, solo se aceptan enteros
+                  
+                  
+                  """)
+    
+    
+    return
+
 # Funcion que muestra las opciones de la aplicación.
 def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     # Mensaje de bienvenida con las posibles opciones.
@@ -345,6 +379,8 @@ def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     3. Salir.
     """)
 
+    compra()
+    
     # Input para que el usuario ingrese la opción escogida.
     opcion = input("""
     Ingrese el número de la opción que desea escoger:
