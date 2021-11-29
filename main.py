@@ -31,8 +31,7 @@ def crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
 
     if(len(serial) != 8):
         print("El serial debe tener una longitud de 8 dígitos.")
-        crear_historieta(lista_de_historietas,
-                         lista_de_seriales, lista_de_palabras)
+        crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         return False
 
     try:
@@ -42,23 +41,19 @@ def crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         for i in range(len(serial)):
             if serial[i] == ' ':
                 print("El valor que ingresó para el serial no puede tener espacios. Por favor ingrese un número sin otros caracteres (Letras, espacios, caracteres especiales, etc)")
-                crear_historieta(lista_de_historietas,
-                                 lista_de_seriales, lista_de_palabras)
+                crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
                 return False
 
         if(len(lista_de_seriales) > 0):
             for j in range(len(lista_de_seriales)):
-                if lista_de_seriales[j] == serial:
-                    print(
-                        "El valor que ingresó para el serial ya se encuentra ocupado. Por favor ingrese un número de serial diferente.")
-                    crear_historieta(lista_de_historietas,
-                                     lista_de_seriales, lista_de_palabras)
+                if lista_de_seriales[j]["serial"] == serial:
+                    print("El valor que ingresó para el serial ya se encuentra ocupado. Por favor ingrese un número de serial diferente.")
+                    crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
                     return False
 
     except:
         print("El valor que ingresó para el serial no es un número. Por favor ingrese un número sin otros caracteres (Letras, espacios, caracteres especiales, etc)")
-        crear_historieta(lista_de_historietas,
-                         lista_de_seriales, lista_de_palabras)
+        crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         return False
 
     # Chequeando el título.
@@ -132,19 +127,14 @@ def crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     actualizar_lista_de_historieta(lista_de_historietas)
 
     # Agrega el nuevo elemento a la lista de seriales
-    lista_de_seriales.append(
-        {"posicion": len(lista_de_historietas)-1, "serial": serial})
+    lista_de_seriales.append({"posicion": len(lista_de_historietas)-1, "serial": serial})
     quick_sort(lista_de_seriales, 0, len(lista_de_seriales) - 1, "serial")
 
     # Agrega el nuevo elemento a la lista de palabras
     lista_titulo = titulo.split(" ")
     for k in range(len(lista_titulo)):
         
-        lista_de_palabras.append(
-            {"posicion": len(lista_de_historietas)-1, "palabra": lista_titulo[k]})
-    lista_de_palabras = sorted(
-        lista_de_palabras, key=lambda x: x['palabra'].lower())
-    print(lista_de_palabras)
+        lista_de_palabras.append({"posicion": len(lista_de_historietas)-1, "palabra": lista_titulo[k]})
 
 # Divide la lista en partes para poder realizar el ordenamiento con "Quick Sort".
 def particion(arr, menor, mayor, elemento):
@@ -184,7 +174,7 @@ def bubleSort(num, metodo_ordenamiento):
                                                                                    1][metodo_ordenamiento], num[i][metodo_ordenamiento]
                 intercambio = True
 
-#Busqueda binaria por posicion
+# Función de búsqueda binaria para los Seriales
 def busqueda_binaria(arr, menor, mayor, serial, lista_de_historietas):
     if mayor >= menor:
         # El doble slash "//" divide y rendondea hacia abajo
@@ -197,23 +187,6 @@ def busqueda_binaria(arr, menor, mayor, serial, lista_de_historietas):
 
         else:
             return busqueda_binaria(arr, mid + 1, mayor, serial, lista_de_historietas)
-    else:
-        return -1
-
-
-# Función de búsqueda binaria para los Seriales
-def busqueda_binaria_serial(arr, menor, mayor, serial, lista_de_historietas):
-    if mayor >= menor:
-        # El doble slash "//" divide y rendondea hacia abajo
-        mid = (mayor + menor) // 2
-        if arr[mid]["serial"] == serial:
-            return lista_de_historietas[arr[mid]["posicion"]]
-
-        elif arr[mid]["serial"] > serial:
-            return busqueda_binaria_serial(arr, menor, mid - 1, serial, lista_de_historietas)
-
-        else:
-            return busqueda_binaria_serial(arr, mid + 1, mayor, serial, lista_de_historietas)
     else:
         return -1
 
@@ -249,16 +222,16 @@ def busqueda_binaria_palabras(arr, menor, mayor, palabra):
         return -1
 
 # Busqueda binaria de palabras interceptando dos listas
-def Intercepcion_listas():
+def Intercepcion_listas(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     palabras = input("""
     Introduzca el nombre del Comic que quiere buscar.
     Solo puede escribir UNA o DOS Palabras.
-     """)
+    --> """)
     palabras = palabras.split(" ")
    
     if(len(palabras)>2):
         print("Solo puedes insertar UNA o DOS palabras, por favor intente de nuevo.")
-        Intercepcion_listas()
+        Intercepcion_listas(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     lista_primera_palabra = []
     lista_segunda_palabra = []
     muestra_posiciones_1 = []
@@ -277,8 +250,7 @@ def Intercepcion_listas():
     # Muestra las posiciones de todas las coincidencias de la primera palabra
         for i in range(len(lista_primera_palabra)):
             if lista_de_historietas[lista_de_palabras[lista_primera_palabra[i]]["posicion"]]["existe"]==True:
-                muestra_posiciones_1.append(
-                    lista_de_palabras[lista_primera_palabra[i]]["posicion"])
+                muestra_posiciones_1.append(lista_de_palabras[lista_primera_palabra[i]]["posicion"])
     
     #Muestra las posiciones de todas las coincidencias de la segunda palabra
         for i in range(len(lista_segunda_palabra)):
@@ -303,17 +275,16 @@ def Intercepcion_listas():
         1-Volver a intentar.
         2-Volver al Inicio
         3-Salir del sistema 
-        """)
+        --> """)
                 opcion = int(opcion)
                 if opcion==1:
-                    Intercepcion_listas()
+                    Intercepcion_listas(lista_de_historietas, lista_de_seriales, lista_de_palabras)
                 elif opcion==2:
                     inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
                 else:
                     print("Gracias por ingresar al sistema. Hasta luego")
                 return
             
-
     #Imprime todas las historietas que coincidan con las dos palabras
         else:
         #Convierte los Array en objetos
@@ -325,7 +296,7 @@ def Intercepcion_listas():
             list3= list(set3)
             if len(list3)==0:
                 print("No existen Historietas por ese nombre")
-                return Intercepcion_listas()
+                return Intercepcion_listas(lista_de_historietas, lista_de_seriales, lista_de_palabras)
             print("""
             Las opciones disponibles son: 
                 """)
@@ -339,7 +310,7 @@ def Intercepcion_listas():
 
             except:
                 print("No se encontro el numero escogido.")
-                return Intercepcion_listas()
+                return Intercepcion_listas(lista_de_historietas, lista_de_seriales, lista_de_palabras)
             
     except:
         cadena= " ".join(palabras)
@@ -354,31 +325,34 @@ def Intercepcion_listas():
         """)
         opcion = int(opcion)
         if opcion==1:
-            return Intercepcion_listas()
+            return Intercepcion_listas(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         elif opcion==2:
             return inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         else:
             print("Gracias por ingresar al sistema. Hasta luego")
             return
-def busqueda_serial():
+
+
+def busqueda_serial(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     serial = input("Ingrese el serial que desea buscar: ")
     try:
         serial_evaluacion = int(serial)
     except:
         print("Ingrese un Numero.")
-        busqueda_serial()
+        busqueda_serial(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     
     serial_encontrado = busqueda_binaria(lista_de_seriales,0,len(lista_de_seriales)-1,serial,lista_de_historietas)
     if lista_de_historietas[serial_encontrado]["existe"] == False:
         print("Serial no encontrado, por favor verifique e intente de nuevo")
-        return busqueda_serial()
+        return busqueda_serial(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     if serial_encontrado==-1:
         print("Serial no encontrado, por favor verifique e intente de nuevo")
-        busqueda_serial()
+        busqueda_serial(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     else:
         return serial_encontrado
 
-def busqueda_historieta():
+
+def busqueda_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     
     opcion=input("""
     Indique como quiere buscar la historieta:
@@ -388,18 +362,18 @@ def busqueda_historieta():
     try:
         opcion=int(opcion)
         if opcion==1:
-            return busqueda_serial()
+            return busqueda_serial(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         elif opcion==2:
-            return Intercepcion_listas()
+            return Intercepcion_listas(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     except:
         print("Ingrese un Numero.")
-        return busqueda_historieta()
+        return busqueda_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
 
 #Funcion que compra que tiene como parametro la lista encontrada en la funcion Intercepcion_listas
 def compra(lista_de_historietas):
     
     #Contiene informacion de la historieta que se quiere comprar
-    a_comprar_indice = busqueda_historieta()
+    a_comprar_indice = busqueda_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     a_comprar_original = str(lista_de_historietas[a_comprar_indice])
     a_comprar = str(a_comprar_original).replace("{","").replace("}","").split(",")
         
@@ -466,8 +440,10 @@ def compra(lista_de_historietas):
         return    
     
     return
-def modificar_stock():
-    historieta_selecionada= busqueda_historieta()
+
+
+def modificar_stock(lista_de_historietas, lista_de_seriales, lista_de_palabras):
+    historieta_selecionada= busqueda_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     
     stock_usuario=input("""Ingrese cuantas historietas quiere colocar: """)
     try:
@@ -477,17 +453,18 @@ def modificar_stock():
     suma_stock = lista_de_historietas[historieta_selecionada]["stock_actual"] + stock_usuario
     if suma_stock>99:
         print("No puedes tener mas de 99 historietas en el Stock.")
-        modificar_stock()
+        modificar_stock(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     
     lista_de_historietas[historieta_selecionada]["stock_actual"] = suma_stock
     actualizar_lista_de_historieta(lista_de_historietas)
-    
-def borrador_logico():
-    historieta_seleccionada=busqueda_historieta()
+
+
+def borrador_logico(lista_de_historietas, lista_de_seriales, lista_de_palabras):
+    historieta_seleccionada=busqueda_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)
     opcion=input(f"""
-    Seguro que quiere borrar la historieta '{lista_de_historietas[historieta_seleccionada]["titulo"]}':
-        1- Si
-        2- No 
+    Seguro que quiere borrar la historieta '{lista_de_historietas[historieta_seleccionada]["titulo"]} (Utilice el numero)':
+        1.- Si
+        2.- No 
     """)
     try:
         opcion=int(opcion)
@@ -499,9 +476,23 @@ def borrador_logico():
             return inicio(lista_de_historietas,lista_de_seriales,lista_de_palabras)
     except:
         print("Porfavor ingrese un numero valido")
-        return borrador_logico()
-        
+        return borrador_logico(lista_de_historietas, lista_de_seriales, lista_de_palabras)
 
+# Funcion que se encarga de borrar las historietas borradas logicamente y de actualizar las demás listas. 
+def compactador(lista_de_historietas, lista_de_seriales, lista_de_palabras):
+    lista_de_historietas = list(filter(lambda historieta: historieta["existe"] == True, lista_de_historietas))
+    actualizar_lista_de_historieta(lista_de_historietas)
+    if(len(lista_de_historietas) > 0):
+        for i in range(len(lista_de_historietas)):
+            lista_de_seriales.append({"posicion": i, "serial": lista_de_historietas[i]["serial"]})
+            lista_titulo = lista_de_historietas[i]["titulo"].split(" ")
+            for k in range(len(lista_titulo)):
+                lista_de_palabras.append({"posicion": i, "palabra": lista_titulo[k]})
+        def minusculas(palabra):
+            return palabra["palabra"].lower()
+        lista_de_palabras = sorted(lista_de_palabras, key=minusculas)
+        quick_sort(lista_de_seriales, 0, len(lista_de_seriales) - 1, "serial")
+    
 # Funcion que muestra las opciones de la aplicación.
 def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     # Mensaje de bienvenida con las posibles opciones.
@@ -513,36 +504,38 @@ def inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras):
     3. Comprar Historieta.
     4. Modificar Stock.
     5. Borrar Historieta.
+    6. Compactador.
+    7. Salir.
     """)
-
-    
     
     # Input para que el usuario ingrese la opción escogida.
-    
-    
-    opcion = input("""
-    Ingrese el número de la opción que desea escoger:
+    opcion = input("""Ingrese el número de la opción que desea escoger:
     --> """)
-
+    print("Lista de Palabras:", lista_de_palabras)
     try:
         opcion = int(opcion)
         if(opcion == 1):
-            crear_historieta(lista_de_historietas,
-                             lista_de_seriales, lista_de_palabras)
+            crear_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)        
+            def minusculas(palabra):
+                return palabra["palabra"].lower()
+            lista_de_palabras = sorted(lista_de_palabras, key=minusculas)
             inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         elif(opcion == 2):
-            print(lista_de_historietas[busqueda_historieta()])
+            print(lista_de_historietas[busqueda_historieta(lista_de_historietas, lista_de_seriales, lista_de_palabras)])
             inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         elif(opcion==3):
             compra(lista_de_historietas)
             inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         elif(opcion==4):
-            modificar_stock()
+            modificar_stock(lista_de_historietas, lista_de_seriales, lista_de_palabras)
             inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         elif(opcion==5):
-            borrador_logico()
+            borrador_logico(lista_de_historietas, lista_de_seriales, lista_de_palabras)
             inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
         elif(opcion==6):
+            compactador(lista_de_historietas, lista_de_seriales, lista_de_palabras)
+            inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
+        elif(opcion==7):
             return
         else:
             print("El número que ingresó no coincide con ninguna de las opciones disponibles. Por favor intente de nuevo")
@@ -562,16 +555,9 @@ if(len(lista_de_historietas) > 0):
         for k in range(len(lista_titulo)):
             lista_de_palabras.append(
                 {"posicion": i, "palabra": lista_titulo[k]})
-    # print(lista_de_palabras)
-    lista_de_palabras = sorted(
-        lista_de_palabras, key=lambda x: x['palabra'].lower())
-    # quick_sort(lista_de_palabras, 0, len(lista_de_palabras) - 1, "palabra")
+    lista_de_palabras = sorted(lista_de_palabras, key=lambda x: x['palabra'].lower())
     quick_sort(lista_de_seriales, 0, len(lista_de_seriales) - 1, "serial")
 
 # Mensaje de Bienvenida
 print("Bienvenido a nuestra tienda de historietas ARG.")
 inicio(lista_de_historietas, lista_de_seriales, lista_de_palabras)
-
-lista_de_historietas = descargar_lista_de_historietas()
-
-
